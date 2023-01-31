@@ -1,0 +1,33 @@
+repositories:
+  play_motion:
+    type: git
+    url: ssh://git@git.promo-bot.ru:49192/promobot-m/play_motion.git
+    version: master
+  pm_behavior_tree:
+    type: git
+    url: ssh://git@git.promo-bot.ru:49192/promobot-m/pm_behavior_tree.git
+    version: master
+  pm_description:
+    type: git
+    url: ssh://git@git.promo-bot.ru:49192/promobot-m/pm_description.git
+    version: master
+  pm_gui:
+    type: git
+    url: ssh://git@git.promo-bot.ru:49192/promobot-m/pm_gui.git
+    version: feature/PM-60_automatic-servos-aggregation
+  pm_msgs:
+    type: git
+    url: ssh://git@git.promo-bot.ru:49192/promobot-m/pm_msgs.git
+    version: master
+  pm_simulation:
+    type: git
+    url: ssh://git@git.promo-bot.ru:49192/promobot-m/pm_simulation.git
+    version: master
+  pm_tests:
+    type: git
+    url: ssh://git@git.promo-bot.ru:49192/promobot-m/pm_tests.git
+    version: master
+  pm_utils:
+    type: git
+    url: ssh://git@git.promo-bot.ru:49192/promobot-m/pm_utils.git
+    version: feature/PM-60_automatic-servos-aggregation

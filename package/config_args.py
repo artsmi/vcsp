@@ -2,7 +2,7 @@ import pathlib as Pathlib
 import os as OS
 
 GC_VCS_P_CFG = "vcs_p.json"
-GC_SRC_NAME = "src"
+GC_SRC_NAME = "../src"
 GC_REPOS_NAME = ".repos"
 GC_DEFAULT_BRANCH_NAME = "master"
 GC_DEFAULT_PROFILE_NAME = "default"

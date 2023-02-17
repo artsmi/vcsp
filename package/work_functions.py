@@ -246,7 +246,7 @@ def check_main_repo():
 
 
 def get_active_branch_name():
-    head_dir = Path(".") / ".git" / "HEAD"
+    head_dir = Path("..") / ".git" / "HEAD"
     with head_dir.open("r") as f:
         content = f.read().splitlines()
 

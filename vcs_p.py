@@ -18,7 +18,7 @@ import copy as Copy
 
 GC_VCS_P_CFG = "vcs_p.json"
 GC_SRC_NAME = "src"
-GC_REPOS_NAME = "pm.repos"
+GC_REPOS_NAME = ".repos"
 GC_DEFAULT_BRANCH_NAME = "master"
 GC_DEFAULT_PROFILE_NAME = "default"
 GC_COMMIT_FILE_NAME = "_commit.vcs_p"
@@ -27,9 +27,6 @@ GC_DOCKER_OPEN_CMD = "docker run --rm -it -v $(pwd):/ws -w /ws 192.168.89.202:50
 
 G_CFG = {}
 G_CFG["repos"] = []
-G_CFG["editor"] = "atom"
-G_CFG["editor_commit"] = GC_EDITOR_COMMIT_DEFAULT
-G_CFG["autor"] = "Promobot"
 G_CFG["profile"] = "default"
 G_CFG["profiles"] = {}
 
@@ -233,12 +230,6 @@ def init_repos_json():
     return True
 
 
-def work_edit():
-    cmd = G_CFG["editor"] + " ./" + GC_VCS_P_CFG
-    OS.system(cmd)
-    return
-
-
 def __add_profile(profile_name):
     repos = G_CFG["repos"]
     profiles = G_CFG["profiles"]
@@ -269,7 +260,6 @@ def work_init():
     G_CFG["repos"] = repos
     __add_profile(GC_DEFAULT_PROFILE_NAME)
     __save_cfg_file()
-    work_edit()
 
 
 def work_show_repos():
@@ -311,7 +301,6 @@ def work_add_profile(profile):
     print("New profile has been added: " + profile +"\
         \nCheck it in editor")
     __save_cfg_file()
-    work_edit()
 
 
 def work_checkoutb(branch):
@@ -504,12 +493,6 @@ def parse_work():
     print("\nSync started... \n\n")
     work_sync()
     print("\nSync completed! Working on direct command... \n\n")
-
-    # if args.docker:
-    #     work_docker_open()
-
-    if args.edit:
-        work_edit()
 
     if __ch_str(args.orep):
         work_orep(args.orep)

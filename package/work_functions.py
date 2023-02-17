@@ -1,6 +1,5 @@
 import shutil as Shutil
 import os as OS
-import pygit2 as GIT
 from pathlib import Path
 import config_args as ca
 import parse_args as pa

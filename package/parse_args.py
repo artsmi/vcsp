@@ -1,6 +1,7 @@
 import argparse as ARGP
 import config_args as ca
 
+
 def __ch_str(s):
     return s is not None and len(s) != 0
 

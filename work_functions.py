@@ -4,6 +4,7 @@ import pygit2 as GIT
 from pathlib import Path
 import config_args as ca
 import parse_args as pa
+import config_func as cf
 import subprocess
 
 
@@ -23,18 +24,18 @@ def work_init():
             print("adding: " + ename + " ...")
 
     ca.G_CFG["repos"] = repos
-    __add_profile(ca.GC_DEFAULT_PROFILE_NAME)
-    __save_cfg_file()
+    cf.__add_profile(ca.GC_DEFAULT_PROFILE_NAME)
+    cf.__save_cfg_file()
 
 
 def work_show_repos():
-    isValid, repo_paths = get_check_repos_paths()
+    isValid, repo_paths = cf.get_check_repos_paths()
     if not isValid:
         print("Error: cannot load repos paths!" /
               "Please check profiles/<active_profile>/repos in " + str(ca.GC_VCS_P_CFG))
         return
 
-    isValid, repo_names = get_check_repos_names()
+    isValid, repo_names = cf.get_check_repos_names()
     if not isValid:
         print("Error: cannot load repos names!" /
               "Please check profiles/<active_profile>/repos in " + str(ca.GC_VCS_P_CFG))
@@ -51,11 +52,11 @@ def work_show_repos():
 
 def work_status():
     check_main_repo()
-    isValid, repos_paths = get_check_repos_paths()
+    isValid, repos_paths = cf.get_check_repos_paths()
     if not isValid:
         return
 
-    repos_str = __build_repos_str(repos_paths)
+    repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args status"
     OS.system(cmd)
     subprocess.call(["git", "status"])
@@ -63,34 +64,34 @@ def work_status():
 
 
 def work_add_profile(profile):
-    __add_profile(profile)
+    cf.__add_profile(profile)
     print("New profile has been added: " + profile + "\
         \nCheck it in editor")
-    __save_cfg_file()
+    cf.__save_cfg_file()
 
 
 def work_checkoutb(branch):
     check_main_repo()
-    isValid, repos_paths = get_check_repos_paths()
+    isValid, repos_paths = cf.get_check_repos_paths()
     if not isValid:
         return
 
-    __switch_branch_cfg(branch)
+    cf.__switch_branch_cfg(branch)
     subprocess.call(["git", "checkout", "-b", branch])
-    repos_str = __build_repos_str(repos_paths)
+    repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args checkout -b " + branch
     OS.system(cmd)
 
 
 def work_checkout(branch):
     check_main_repo()
-    isValid, repos_paths = get_check_repos_paths()
+    isValid, repos_paths = cf.get_check_repos_paths()
     if not isValid:
         return
 
-    __switch_branch_cfg(branch)
+    cf.__switch_branch_cfg(branch)
     subprocess.call(["git", "checkout", branch])
-    repos_str = __build_repos_str(repos_paths)
+    repos_str = cf.__build_repos_str(repos_paths)
 
     cmd = "vcs custom --git --repos " + repos_str + " --args checkout " + branch
     OS.system(cmd)
@@ -98,11 +99,11 @@ def work_checkout(branch):
 
 def work_fetch():
     check_main_repo()
-    isValid, repos_paths = get_check_repos_paths()
+    isValid, repos_paths = cf.get_check_repos_paths()
     if not isValid:
         return
 
-    repos_str = __build_repos_str(repos_paths)
+    repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args fetch"
     OS.system(cmd)
     subprocess.call(["git", "fetch"])
@@ -110,11 +111,11 @@ def work_fetch():
 
 def work_pull():
     check_main_repo()
-    isValid, branch_name, _, repos_paths = get_check_meta_info()
+    isValid, branch_name, _, repos_paths = cf.get_check_meta_info()
     if not isValid:
         return
 
-    repos_str = __build_repos_str(repos_paths)
+    repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args pull origin " + branch_name
     OS.system(cmd)
     subprocess.call(["git", "pull", "origin", branch_name])
@@ -122,11 +123,11 @@ def work_pull():
 
 def work_push():
     check_main_repo()
-    isValid, branch_name, _, repos_paths = get_check_meta_info()
+    isValid, branch_name, _, repos_paths = cf.get_check_meta_info()
     if not isValid:
         return
 
-    repos_str = __build_repos_str(repos_paths)
+    repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args push -u origin " + branch_name
     OS.system(cmd)
     subprocess.call(["git", "push", "-u", "origin", branch_name])
@@ -156,7 +157,7 @@ def work_sync():
 
 
 def work_orep(repo):
-    isValid, repos_names = get_check_repos_names()
+    isValid, repos_names = cf.get_check_repos_names()
     if not isValid:
         return
 
@@ -174,7 +175,7 @@ def work_orep(repo):
 
 
 def work_oallrepos():
-    isValid, repos_paths = get_check_repos_paths()
+    isValid, repos_paths = cf.get_check_repos_paths()
     if not isValid:
         return
 
@@ -187,11 +188,11 @@ def work_oallrepos():
 
 def work_add():
     check_main_repo()
-    isValid, repos_names = get_check_repos_paths()
+    isValid, repos_names = cf.get_check_repos_paths()
     if not isValid:
         return
 
-    repos_str = __build_repos_str(repos_names)
+    repos_str = cf.__build_repos_str(repos_names)
     cmd = "vcs custom --git --repos " + repos_str + " --args add ."
     OS.system(cmd)
     subprocess.call(["git", "add", "."])
@@ -199,7 +200,7 @@ def work_add():
 
 def work_commit():
     check_main_repo()
-    isValid, branch_name, _, repos_paths = get_check_meta_info()
+    isValid, branch_name, _, repos_paths = cf.get_check_meta_info()
     if not isValid:
         return
 
@@ -208,9 +209,9 @@ def work_commit():
 
     commit_file_path = OS.path.join(ca.GC_FOLDER_PATH, ca.GC_COMMIT_FILE_NAME)
     if ca.G_CFG["editor_commit"] == ca.GC_EDITOR_COMMIT_DEFAULT:
-        __commit_default_editor(commit_file_path)
+        cf.__commit_default_editor(commit_file_path)
     else:
-        __commit_alternative_editor(commit_file_path)
+        cf.__commit_alternative_editor(commit_file_path)
 
     commit_message = ""
     with open(ca.GC_COMMIT_FILE_NAME, 'r') as f:
@@ -226,7 +227,7 @@ def work_commit():
     commit_message += "\n On branch " + branch_name + \
                       " \n pm-Development: " + ca.G_CFG["autor"]
 
-    repos_str = __build_repos_str(repos_paths)
+    repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args commit -m \"" + commit_message + "\""
     OS.system(cmd)
 

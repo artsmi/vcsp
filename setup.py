@@ -12,5 +12,6 @@ setup(
     install_requires=[
         'psutil == 5.9.4',
         'setuptools == 56.0.0'
+        'vcstools == 0.1.42'
     ],
 )

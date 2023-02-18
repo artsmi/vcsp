@@ -6,9 +6,9 @@
 # see https://kislyuk.github.io/argcomplete
 
 
-import parse_args as pa
-import work_functions as wa
-import config_func as cf
+import package.parse_args as pa
+import package.work_functions as wa
+import package.config_func as cf
 
 
 def parse_work():

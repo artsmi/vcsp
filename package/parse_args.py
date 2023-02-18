@@ -1,5 +1,5 @@
 import argparse as ARGP
-import config_args as ca
+import package.config_args as ca
 
 
 def __ch_str(s):

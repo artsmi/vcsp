@@ -4,8 +4,8 @@ import json as JSON
 import psutil as PU
 import time as Time
 import copy as Copy
-import config_args as ca
-import parse_args as pa
+import package.config_args as ca
+import package.parse_args as pa
 
 
 def __get_profile():
@@ -116,10 +116,10 @@ def init_repos_json():
         return False
 
     if ca.G_CFG == None:
-        print("Error: cannot load config " + G_CFG)
+        print("Error: cannot load config " + ca.G_CFG)
         return False
 
-    ca.gp_profile = G_CFG["profiles"][G_CFG["profile"]]
+    ca.gp_profile = ca.G_CFG["profiles"][ca.G_CFG["profile"]]
 
     print("\nactive profile: " + ca.gp_profile["branch_name"] + "\n" + str(ca.gp_profile))
     return True

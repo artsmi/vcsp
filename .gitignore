@@ -2,3 +2,6 @@
 /src
 /vcs_p.json
 /.idea
+/dist
+/build
+/vcs_p_pack.egg-info

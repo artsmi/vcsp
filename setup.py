@@ -2,14 +2,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='vcs_p_pack',
-    version='0.0.8',
-    long_description_content_type="text/markdown",
+    version='0.1.3',
+    packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'parse_work=package.__main__:main'
-        ]
+            'parse_work = package.vcs_p:parse_work',
+        ],
     },
-    package_dir={"": "package"},
-    packages=find_packages("package"),
-    install_requires=['']
+    install_requires=[
+        'psutil == 5.9.4',
+        'setuptools == 56.0.0'
+    ],
 )

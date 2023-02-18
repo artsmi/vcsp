@@ -1,9 +1,10 @@
 import shutil as Shutil
 import os as OS
 from pathlib import Path
-import config_args as ca
-import parse_args as pa
-import config_func as cf
+import package.config_args as ca
+import package.parse_args as pa
+import package.config_func as cf
+import pygit2 as GIT
 import subprocess
 
 
@@ -240,15 +241,5 @@ def work_docker_open():
 
 
 def check_main_repo():
-    if get_active_branch_name() != ca.gp_profile["branch_name"]:
-        subprocess.call(["git", "checkout", get_active_branch_name()])
-
-
-def get_active_branch_name():
-    head_dir = Path("..") / ".git" / "HEAD"
-    with head_dir.open("r") as f:
-        content = f.read().splitlines()
-
-    for line in content:
-        if line[0:4] == "ref:":
-            return line.partition("refs/heads/")[2]
+    if GIT.Repository('.').head.shorthand != ca.gp_profile["branch_name"]:
+        subprocess.call(["git", "checkout", ca.gp_profile["branch_name"]])

@@ -24,6 +24,32 @@
   ./vcs_p.py --clear --init --docker
   ```
 
+### Как загрузить на Pypi:
+1) Инициализируем проект как пакет
+```bash
+python -m build
+```
+2) Загружаем его на Pypi
+````bash
+twine upload dist/*
+````
+3) Добавьте файл .repos в корневую директорию проекта
+4) Настройте файл следующим образом
+5) ```
+   Repositories:
+    repo_name
+    type: vcs_type
+    url: repo_url
+    version: branch_ver
+   ```
+6) Проверить работоспособность можно следующими командами
+```bash
+pip install <packagename>
+```
+```bash
+work_parse --init
+```
+
 ### Примеры workflow:
 1) инициализировать репозиторий;
 ```bash

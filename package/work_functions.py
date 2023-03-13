@@ -153,7 +153,7 @@ def work_clear():
 
 
 def work_sync():
-    work_checkout(ca.gp_profile["branch_name"])
+    work_checkout(ca.G_CFG["fast_checkout"])
     return
 
 

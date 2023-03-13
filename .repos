@@ -1,0 +1,17 @@
+repositories:
+  test_repo_1:
+    type: git
+    url: git@github.com:gravitacia/test_repo_1.git
+    version: master
+  test_repo_2:
+    type: git
+    url: git@github.com:gravitacia/test_repo_2.git
+    version: master
+  test_repo_3:
+    type: git
+    url: git@github.com:gravitacia/test_repo_3.git
+    version: master
+  test_repo_4:
+    type: git
+    url: git@github.com:gravitacia/test_repo_4.git
+    version: master

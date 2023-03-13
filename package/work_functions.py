@@ -5,7 +5,6 @@ import package.config_args as ca
 import package.parse_args as pa
 import package.config_func as cf
 import pygit2 as GIT
-import subprocess
 
 
 def work_init():
@@ -59,7 +58,7 @@ def work_status():
     repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args status"
     OS.system(cmd)
-    subprocess.call(["git", "status"])
+
     return
 
 
@@ -77,7 +76,6 @@ def work_checkoutb(branch):
         return
 
     cf.__switch_branch_cfg(branch)
-    subprocess.call(["git", "checkout", "-b", branch])
     repos_str = cf.__build_repos_str(repos_paths)
 
     cmd = "vcs custom --git --repos " + repos_str + " --args checkout -b " + branch
@@ -91,7 +89,6 @@ def work_checkout(branch):
         return
 
     cf.__switch_branch_cfg(branch)
-    subprocess.call(["git", "checkout", branch])
     repos_str = cf.__build_repos_str(repos_paths)
 
     cmd = "vcs custom --git --repos " + repos_str + " --args checkout " + branch
@@ -107,7 +104,6 @@ def work_fetch():
     repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args fetch"
     OS.system(cmd)
-    subprocess.call(["git", "fetch"])
 
 
 def work_pull():
@@ -119,7 +115,6 @@ def work_pull():
     repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args pull origin " + branch_name
     OS.system(cmd)
-    subprocess.call(["git", "pull", "origin", branch_name])
 
 
 def work_push():
@@ -131,7 +126,6 @@ def work_push():
     repos_str = cf.__build_repos_str(repos_paths)
     cmd = "vcs custom --git --repos " + repos_str + " --args push -u origin " + branch_name
     OS.system(cmd)
-    subprocess.call(["git", "push", "-u", "origin", branch_name])
 
 
 def work_clear():
@@ -196,7 +190,6 @@ def work_add():
     repos_str = cf.__build_repos_str(repos_names)
     cmd = "vcs custom --git --repos " + repos_str + " --args add ."
     OS.system(cmd)
-    subprocess.call(["git", "add", "."])
 
 
 def work_commit():
@@ -233,7 +226,6 @@ def work_commit():
     OS.system(cmd)
 
     OS.remove(commit_file_path)
-    subprocess.call(["git", "commit", "-m", commit_message])
     return
 
 
@@ -243,4 +235,5 @@ def work_docker_open():
 
 def check_main_repo():
     if GIT.Repository('.').head.shorthand != ca.G_CFG["current_branch"]:
-        subprocess.call(["git", "checkout", ca.G_CFG["current_branch"]])
+        cmd = "git checkout " + ca.G_CFG["current_branch"]
+        OS.system(cmd)

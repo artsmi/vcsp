@@ -2,7 +2,7 @@ import pathlib as Pathlib
 import os as OS
 
 GC_VCS_P_CFG = "vcs_p.json"
-GC_SRC_NAME = "../src"
+GC_SRC_NAME = "src"
 GC_REPOS_NAME = ".repos"
 GC_DEFAULT_BRANCH_NAME = "master"
 GC_DEFAULT_PROFILE_NAME = "default"
@@ -10,7 +10,11 @@ GC_COMMIT_FILE_NAME = "_commit.vcs_p"
 GC_EDITOR_COMMIT_DEFAULT = "nano"
 GC_DOCKER_OPEN_CMD = "docker run --rm -it -v $(pwd):/ws -w /ws 192.168.89.202:5000/promobot/pm_meta:latest"
 
-G_CFG = {"repos": [], "profile": "default", "profiles": {}}
+G_CFG = {}
+G_CFG["repos"] = []
+G_CFG["fast_checkout"] = "master"
+G_CFG["working_repos"] = []
+G_CFG["current_branch"] = []
 
 gp_profile = None
 

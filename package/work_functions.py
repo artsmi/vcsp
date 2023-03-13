@@ -24,7 +24,7 @@ def work_init():
             print("adding: " + ename + " ...")
 
     ca.G_CFG["repos"] = repos
-    cf.__add_profile(ca.GC_DEFAULT_PROFILE_NAME)
+    cf.__add_profile()
     cf.__save_cfg_file()
 
 
@@ -79,6 +79,7 @@ def work_checkoutb(branch):
     cf.__switch_branch_cfg(branch)
     subprocess.call(["git", "checkout", "-b", branch])
     repos_str = cf.__build_repos_str(repos_paths)
+
     cmd = "vcs custom --git --repos " + repos_str + " --args checkout -b " + branch
     OS.system(cmd)
 
@@ -241,5 +242,5 @@ def work_docker_open():
 
 
 def check_main_repo():
-    if GIT.Repository('.').head.shorthand != ca.gp_profile["branch_name"]:
-        subprocess.call(["git", "checkout", ca.gp_profile["branch_name"]])
+    if GIT.Repository('.').head.shorthand != ca.G_CFG["current_branch"]:
+        subprocess.call(["git", "checkout", ca.G_CFG["current_branch"]])

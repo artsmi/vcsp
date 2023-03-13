@@ -8,10 +8,6 @@ import package.config_args as ca
 import package.parse_args as pa
 
 
-def __get_profile():
-    return ca.gp_profile
-
-
 def get_check_meta_info():
     isValid = False
     branch_name = None
@@ -31,8 +27,7 @@ def get_check_meta_info():
 def get_check_branch_name():
     isValid = True
 
-    profile = __get_profile()
-    branch_name = profile["branch_name"]
+    branch_name = ca.G_CFG["current_branch"]
     if not pa.__ch_str(branch_name):
         print("Please specify 'branch_name' in " + ca.GC_VCS_P_CFG + \
               "\nAborting command...")
@@ -48,8 +43,7 @@ def __build_repos_str(repos):
 
 
 def get_check_repos_paths():
-    profile = __get_profile()
-    cfg_repos = profile["repos"]
+    cfg_repos = ca.G_CFG["working_repos"]
     repos_paths = []
     for repo_folder_name in cfg_repos:
         repo_path = OS.path.join(ca.GC_SRC_PATH, repo_folder_name)
@@ -66,8 +60,7 @@ def get_check_repos_paths():
 
 
 def get_check_repos_names():
-    profile = __get_profile()
-    repos_names = Copy.deepcopy(profile["repos"])
+    repos_names = Copy.deepcopy(ca.G_CFG["repos"])
 
     isValid = len(repos_names) != 0
     if not isValid:
@@ -91,8 +84,7 @@ def __switch_branch_cfg(branch):
               "\nAborting command...")
         return False
 
-    profile = __get_profile()
-    profile["branch_name"] = branch
+    ca.G_CFG["current_branch"] = branch
     __save_cfg_file()
     return True
 
@@ -119,22 +111,18 @@ def init_repos_json():
         print("Error: cannot load config " + ca.G_CFG)
         return False
 
-    ca.gp_profile = ca.G_CFG["profiles"][ca.G_CFG["profile"]]
-
-    print("\nactive profile: " + ca.gp_profile["branch_name"] + "\n" + str(ca.gp_profile))
     return True
 
 
 def __add_profile(profile_name):
     repos = ca.G_CFG["repos"]
-    profiles = ca.G_CFG["profiles"]
 
     profile = {}
     profile["branch_name"] = ca.GC_DEFAULT_BRANCH_NAME
     profile["repos"] = repos
 
-    profiles[profile_name] = profile
-    ca.G_CFG["profiles"] = profiles
+    ca.G_CFG["working_repos"] = profile["repos"]
+    ca.G_CFG["current_branch"] = profile["branch_name"]
 
 
 def __commit_default_editor(commit_file_path):
@@ -153,3 +141,4 @@ def __commit_alternative_editor(commit_file_path):
         is_process_running = output.find(editor_name) != -1
         Time.sleep(1)
     return
+
